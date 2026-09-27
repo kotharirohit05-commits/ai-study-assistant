@@ -69,7 +69,7 @@ function MindMap({ mindMap }) {
   }
 
   return (
-    <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+    <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
       {/* Header */}
       <div className="border-b border-slate-100 px-5 py-6 sm:px-8">
         <div className="flex items-center justify-center gap-3">
@@ -78,11 +78,11 @@ function MindMap({ mindMap }) {
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white sm:text-2xl">
               Mind Map
             </h2>
 
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               Explore the key concepts visually.
             </p>
           </div>
@@ -90,7 +90,7 @@ function MindMap({ mindMap }) {
       </div>
 
       {/* Map */}
-      <div className="overflow-x-auto bg-slate-50 p-6 sm:p-10">
+      <div className="overflow-x-auto bg-slate-50 p-6 sm:p-10 dark:bg-slate-900">
         <div className="flex min-w-max justify-center">
           <MindMapNode
             node={{

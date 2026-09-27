@@ -34,7 +34,7 @@ useEffect(() => {
 }, [loading]);
 
   const navigate = useNavigate();
-  const { setStudyMaterial } = useStudy();
+  const { setStudyMaterial, darkMode, setDarkMode } = useStudy();
 
   const handleGenerate = async () => {
     if (!input.trim()) {
@@ -79,9 +79,19 @@ useEffect(() => {
     }
   };
 
-  return (
-    <main className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-purple-50 px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
+return (
+  <main className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-purple-50 text-slate-900 transition-colors dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white px-4 py-10 sm:px-6 lg:px-8">
+
+    {/* Dark Mode Toggle */}
+    <button
+      onClick={() => setDarkMode(!darkMode)}
+      className="fixed right-5 top-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-lg shadow-md transition hover:scale-105 dark:border-slate-700 dark:bg-slate-800"
+      aria-label="Toggle dark mode"
+    >
+      {darkMode ? "☀️" : "🌙"}
+    </button>
+
+    <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
 
         {/* Badge */}
         <div className="mb-4 rounded-full bg-indigo-100 px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm">
@@ -89,20 +99,20 @@ useEffect(() => {
         </div>
 
         {/* Heading */}
-        <h1 className="text-center text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+        <h1 className="text-center text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
           AI Study Assistant
         </h1>
 
         {/* Description */}
-        <p className="mt-4 max-w-2xl text-center text-base text-slate-600 sm:text-lg">
+        <p className="mt-4 max-w-2xl text-center text-base text-slate-600 dark:text-slate-300 sm:text-lg">
           Turn any topic or your own notes into interactive
           flashcards and quizzes in seconds.
         </p>
 
         {/* Main Card */}
-        <div className="mt-10 w-full max-w-4xl rounded-2xl border border-slate-200 bg-white p-5 shadow-xl sm:p-8">
+        <div className="mt-10 w-full max-w-4xl rounded-2xl border border-slate-200 bg-white p-5 shadow-xl transition-colors dark:border-slate-700 dark:bg-slate-800 sm:p-8">
 
-          <h2 className="mb-3 text-lg font-bold text-slate-800 sm:text-xl">
+          <h2 className="mb-3 text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
             What do you want to study?
           </h2>
 
@@ -116,13 +126,13 @@ useEffect(() => {
   }}
   placeholder="Enter a topic or paste your notes..."
   rows={8}
-  className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 p-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-base"
+  className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 p-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400 sm:text-base"
 />
 
 
 
 <div className="mt-4">
-  <label className="mb-2 block text-sm font-semibold text-slate-700">
+  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">
     Learning Depth
   </label>
 
@@ -133,8 +143,8 @@ useEffect(() => {
       onClick={() => setDepth("quick")}
       className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
         depth === "quick"
-          ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300"
+          ? "border-indigo-500 bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
       }`}
     >
       ⚡ Quick
@@ -146,8 +156,8 @@ useEffect(() => {
       onClick={() => setDepth("standard")}
       className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
         depth === "standard"
-          ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300"
+          ? "border-indigo-500 bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
       }`}
     >
       📚 Standard
@@ -159,8 +169,8 @@ useEffect(() => {
       onClick={() => setDepth("deep")}
       className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
         depth === "deep"
-          ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300"
+          ? "border-indigo-500 bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200"
       }`}
     >
       🧠 Deep
@@ -168,17 +178,17 @@ useEffect(() => {
   </div>
 </div>
           {error && (
-  <div className="mt-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
+  <div className="mt-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950/40">
     <div className="text-lg">
       ⚠️
     </div>
 
     <div>
-      <p className="font-semibold text-red-700">
+      <p className="font-semibold text-red-700 dark:text-red-400">
         Something went wrong
       </p>
 
-      <p className="mt-1 text-sm text-red-600">
+      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
         {error}
       </p>
 
@@ -212,32 +222,32 @@ useEffect(() => {
         {/* Features */}
         <div className="mt-8 grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+          <div className="rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
             <div className="mb-3 text-3xl">📚</div>
-            <h3 className="text-lg font-bold text-slate-800">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
               Flashcards
             </h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
               Learn key concepts quickly
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+          <div className="rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
             <div className="mb-3 text-3xl">🧠</div>
-            <h3 className="text-lg font-bold text-slate-800">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
               AI Quizzes
             </h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
               Test your understanding
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+          <div className="rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
             <div className="mb-3 text-3xl">⚡</div>
-            <h3 className="text-lg font-bold text-slate-800">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
               Instant
             </h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
               Generate material in seconds
             </p>
           </div>
