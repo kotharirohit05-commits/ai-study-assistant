@@ -1,9 +1,38 @@
 const { z } = require("zod");
 
+// -------------------------
+// Mind Map
+// -------------------------
+
+const mindMapNodeSchema = z.object({
+  title: z.string().min(1),
+
+  children: z
+    .array(z.lazy(() => mindMapNodeSchema))
+    .max(6)
+});
+
+const mindMapSchema = z.object({
+  topic: z.string().min(1),
+
+  children: z
+    .array(mindMapNodeSchema)
+    .min(1)
+    .max(6)
+});
+
+// -------------------------
+// Flashcards
+// -------------------------
+
 const flashcardSchema = z.object({
   question: z.string().min(1),
   answer: z.string().min(1)
 });
+
+// -------------------------
+// Quiz
+// -------------------------
 
 const quizQuestionSchema = z.object({
   question: z.string().min(1),
@@ -19,6 +48,10 @@ const quizQuestionSchema = z.object({
     .max(3)
 });
 
+// -------------------------
+// Complete Study Material
+// -------------------------
+
 const studyMaterialSchema = z.object({
   title: z.string().min(1),
 
@@ -28,7 +61,9 @@ const studyMaterialSchema = z.object({
 
   quiz: z
     .array(quizQuestionSchema)
-    .min(1)
+    .min(1),
+
+  mindMap: mindMapSchema
 });
 
 module.exports = {

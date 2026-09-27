@@ -1,7 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import { useStudy } from "../context/StudyContextProvider";
 import Flashcard from "../components/Flashcard";
 import Quiz from "../components/Quiz";
-import { useNavigate } from "react-router-dom";
+import MindMap from "../components/MindMap";
 
 function StudyMaterial() {
   const navigate = useNavigate();
@@ -20,6 +21,13 @@ function StudyMaterial() {
           <p className="mt-2 text-slate-500">
             Generate some study material first.
           </p>
+
+          <button
+            onClick={() => navigate("/")}
+            className="mt-6 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-indigo-700"
+          >
+            Go Back
+          </button>
         </div>
       </main>
     );
@@ -40,20 +48,29 @@ function StudyMaterial() {
           </h1>
 
           <p className="mx-auto mt-4 max-w-2xl text-slate-600 sm:text-lg">
-            Review the flashcards and test your knowledge with the AI-generated
-            quiz.
+            Explore the key concepts with a mind map, review flashcards,
+            and test your knowledge with an AI-generated quiz.
           </p>
 
           <button
-  onClick={() => {
-  setStudyMaterial(null);
-  navigate("/");
-}}
-  className="mt-6 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-indigo-700 hover:shadow-lg"
->
-  ← Generate New Material
-</button>
+            onClick={() => {
+              setStudyMaterial(null);
+              navigate("/");
+            }}
+            className="mt-6 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-indigo-700 hover:shadow-lg"
+          >
+            ← Generate New Material
+          </button>
         </div>
+
+        {/* Mind Map */}
+        <section className="mb-16">
+          <MindMap mindMap={studyMaterial.mindMap} />
+          
+        </section>
+
+        {/* Divider */}
+        <div className="mb-16 h-px bg-slate-200" />
 
         {/* Flashcards */}
         <section className="mb-16">
