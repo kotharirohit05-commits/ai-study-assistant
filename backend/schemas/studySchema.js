@@ -55,13 +55,8 @@ const quizQuestionSchema = z.object({
 const studyMaterialSchema = z.object({
   title: z.string().min(1),
 
-  flashcards: z
-    .array(flashcardSchema)
-    .min(1),
-
-  quiz: z
-    .array(quizQuestionSchema)
-    .min(1),
+flashcards: z.array(flashcardSchema).length(5),
+quiz: z.array(quizQuestionSchema).length(5),
 
   mindMap: mindMapSchema
 });
