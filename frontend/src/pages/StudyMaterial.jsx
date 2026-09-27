@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function StudyMaterial() {
   const navigate = useNavigate();
-  const { studyMaterial } = useStudy();
+  const { studyMaterial, setStudyMaterial } = useStudy();
 
   if (!studyMaterial) {
     return (
@@ -45,7 +45,10 @@ function StudyMaterial() {
           </p>
 
           <button
-  onClick={() => navigate("/")}
+  onClick={() => {
+  setStudyMaterial(null);
+  navigate("/");
+}}
   className="mt-6 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-indigo-700 hover:shadow-lg"
 >
   ← Generate New Material

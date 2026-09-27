@@ -1,11 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStudy } from "../context/StudyContextProvider";
+
 
 function Home() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [depth, setDepth] = useState("standard");
+
+  const loadingMessages = [
+  "✨ Understanding your topic...",
+  "📚 Creating flashcards...",
+  "🧠 Preparing your quiz...",
+];
+
+const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
+
+useEffect(() => {
+  if (!loading) {
+    setLoadingMessage(loadingMessages[0]);
+    return;
+  }
+
+  let index = 0;
+
+  const interval = setInterval(() => {
+    index = (index + 1) % loadingMessages.length;
+    setLoadingMessage(loadingMessages[index]);
+  }, 1800);
+
+  return () => clearInterval(interval);
+}, [loading]);
 
   const navigate = useNavigate();
   const { setStudyMaterial } = useStudy();
@@ -27,6 +53,7 @@ function Home() {
         },
         body: JSON.stringify({
           input: input,
+          depth: depth
         }),
       });
 
@@ -80,6 +107,7 @@ function Home() {
           </h2>
 
           <textarea
+          
   value={input}
   disabled={loading}
   onChange={(event) => {
@@ -91,6 +119,54 @@ function Home() {
   className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 p-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-base"
 />
 
+
+
+<div className="mt-4">
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Learning Depth
+  </label>
+
+  <div className="flex flex-wrap gap-2">
+    <button
+      type="button"
+      disabled={loading}
+      onClick={() => setDepth("quick")}
+      className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
+        depth === "quick"
+          ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300"
+      }`}
+    >
+      ⚡ Quick
+    </button>
+
+    <button
+      type="button"
+      disabled={loading}
+      onClick={() => setDepth("standard")}
+      className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
+        depth === "standard"
+          ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300"
+      }`}
+    >
+      📚 Standard
+    </button>
+
+    <button
+      type="button"
+      disabled={loading}
+      onClick={() => setDepth("deep")}
+      className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
+        depth === "deep"
+          ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+          : "border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-300"
+      }`}
+    >
+      🧠 Deep
+    </button>
+  </div>
+</div>
           {error && (
   <div className="mt-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
     <div className="text-lg">
@@ -122,14 +198,14 @@ function Home() {
   disabled={loading}
   className="mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-md transition hover:bg-indigo-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 sm:text-lg"
 >
-  {loading ? (
-    <>
-      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-      Generating your study material...
-    </>
-  ) : (
-    "Generate Study Material →"
-  )}
+{loading ? (
+  <>
+    <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+    {loadingMessage}
+  </>
+) : (
+  "Generate Study Material →"
+)}
 </button>
         </div>
 
