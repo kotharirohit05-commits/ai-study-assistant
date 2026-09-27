@@ -80,31 +80,57 @@ function Home() {
           </h2>
 
           <textarea
-            value={input}
-            onChange={(event) => {
-              setInput(event.target.value);
-              setError("");
-            }}
-            placeholder="Enter a topic or paste your notes..."
-            rows={8}
-            className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 p-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 sm:text-base"
-          />
+  value={input}
+  disabled={loading}
+  onChange={(event) => {
+    setInput(event.target.value);
+    setError("");
+  }}
+  placeholder="Enter a topic or paste your notes..."
+  rows={8}
+  className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 p-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-base"
+/>
 
-          {/* Error */}
           {error && (
-            <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
-              {error}
-            </p>
-          )}
+  <div className="mt-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
+    <div className="text-lg">
+      ⚠️
+    </div>
+
+    <div>
+      <p className="font-semibold text-red-700">
+        Something went wrong
+      </p>
+
+      <p className="mt-1 text-sm text-red-600">
+        {error}
+      </p>
+
+      <button
+        onClick={() => setError("")}
+        className="mt-2 text-sm font-semibold text-red-700 underline underline-offset-2 hover:text-red-800"
+      >
+        Dismiss
+      </button>
+    </div>
+  </div>
+)}
 
           {/* Generate Button */}
           <button
-            onClick={handleGenerate}
-            disabled={loading}
-            className="mt-4 w-full rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-md transition hover:bg-indigo-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:text-lg"
-          >
-            {loading ? "Generating..." : "Generate Study Material →"}
-          </button>
+  onClick={handleGenerate}
+  disabled={loading}
+  className="mt-4 flex w-full items-center justify-center gap-3 rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-md transition hover:bg-indigo-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 sm:text-lg"
+>
+  {loading ? (
+    <>
+      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+      Generating your study material...
+    </>
+  ) : (
+    "Generate Study Material →"
+  )}
+</button>
         </div>
 
         {/* Features */}
